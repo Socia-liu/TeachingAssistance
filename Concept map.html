@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>化学反应速率 · 核心目标概念地图 | 认知进阶四模块</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #d8efd6 0%, #c2e0be 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Poppins', system-ui, -apple-system, sans-serif;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+        }
+
+        /* 主容器 — 概念地图核心区 */
+        .map-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(248, 255, 240, 0.75);
+            backdrop-filter: blur(3px);
+            border-radius: 3.5rem;
+            box-shadow: 0 25px 45px rgba(40, 70, 30, 0.2);
+            padding: 2rem 1.8rem;
+            transition: all 0.2s;
+        }
+
+        /* 中心标题 + 进度区 */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 2.8rem;
+        }
+
+        .central-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #2a6b2f;
+            color: #fef9e0;
+            padding: 0.7rem 2rem;
+            border-radius: 100px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 12px 20px -8px rgba(0,0,0,0.2);
+            border: 1px solid #c8f0b0;
+            margin-bottom: 0.8rem;
+        }
+
+        .central-badge span {
+            font-size: 2rem;
+        }
+
+        .sub-quote {
+            background: #e5f3de;
+            display: inline-block;
+            padding: 0.4rem 1.5rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #235b23;
+            margin-top: 8px;
+        }
+
+        /* 进度条 + 重置区 */
+        .progress-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: #eef5ea;
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            margin-bottom: 2rem;
+        }
+
+        .progress-indicator {
+            background: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1e421e;
+            box-shadow: inset 0 0 2px #b5d3a0, 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .progress-indicator span {
+            color: #2e8b57;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 0.2rem;
+        }
+
+        .reset-btn {
+            background: #f4fcf0;
+            border: 1.5px solid #4c8b3c;
+            padding: 0.45rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #2a6b2a;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reset-btn:hover {
+            background: #e0f0d4;
+            transform: translateY(-2px);
+            border-color: #2a6b2a;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* 有趣的四象限网格布局 —— 认知进阶花园 */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0 1.5rem;
+        }
+
+        /* 卡片风格 — 每个目标模块独立且生动 */
+        .goal-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1.6rem 1.4rem 1.8rem 1.4rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            border: 2px solid #c2dfb0;
+            box-shadow: 0 12px 18px -10px rgba(60, 80, 40, 0.15);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 默认左上角装饰条 */
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: #7fb073;
+            transition: all 0.2s;
+        }
+
+        /* 完成态样式 — 深邃森林绿 + 醒目高亮 */
+        .goal-card.completed {
+            background: #2c6e3c;
+            border: 2px solid #e2f7cf;
+            box-shadow: 0 18px 28px -12px #1e4620;
+        }
+
+        .goal-card.completed::before {
+            background: #fdffb9;
+            width: 12px;
+        }
+
+        .goal-card.completed .card-icon,
+        .goal-card.completed .card-title,
+        .goal-card.completed .level-tag,
+        .goal-card.completed .goal-description {
+            color: #fefef0;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .goal-card.completed .level-tag {
+            background: #f9e45b;
+            color: #1f4f1a;
+            border: none;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 22px 32px -14px #395e2e;
+        }
+
+        /* 卡片头部 */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .card-icon {
+            font-size: 2.6rem;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .title-group {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #1e401a;
+            line-height: 1.2;
+            letter-spacing: -0.3px;
+        }
+
+        .level-tag {
+            background: #e0f0d4;
+            padding: 0.25rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #2c632c;
+            text-transform: uppercase;
+            border: 1px solid #9bc47c;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .goal-description {
+            font-size: 0.93rem;
+            line-height: 1.48;
+            color: #2b4425;
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .micro-list {
+            margin-top: 0.8rem;
+            padding-left: 1.2rem;
+            font-size: 0.85rem;
+            color: #416d38;
+            list-style-type: none;
+        }
+
+        .micro-list li {
+            margin: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .micro-list li::before {
+            content: "🌱";
+            font-size: 0.8rem;
+        }
+
+        .goal-card.completed .micro-list li::before {
+            content: "✅";
+        }
+
+        .goal-card.completed .micro-list {
+            color: #eef7e2;
+        }
+
+        /* 辅助连接符号 (趣味认知箭头) 放在网格中间？不加连线，用四格自然过渡 */
+        .insight-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #b3d3a3;
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .insight-badge {
+            background: #e3f0db;
+            border-radius: 30px;
+            padding: 0.2rem 1rem;
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: #2d572d;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 1rem;
+            }
+            .map-container {
+                padding: 1.2rem;
+            }
+            .goals-grid {
+                gap: 1.2rem;
+            }
+            .card-title {
+                font-size: 1.3rem;
+            }
+            .card-icon {
+                font-size: 2.2rem;
+            }
+            .central-badge {
+                font-size: 1.3rem;
+                padding: 0.4rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="map-container">
+    <div class="hero-section">
+        <div class="central-badge">
+            <span>⚛️</span> 化学反应速率 · 核心认知地图
+        </div>
+        <div class="sub-quote">
+            🧭 布鲁姆四阶目标 | 点击模块 · 点亮你的理解性表现
+        </div>
+    </div>
+
+    <div class="progress-panel">
+        <div class="progress-indicator">
+            📌 目标达成进度：<span id="completedCount">0</span> / <span id="totalCount">4</span>
+        </div>
+        <button class="reset-btn" id="resetBtn">
+            🔄 重置全部目标
+        </button>
+    </div>
+
+    <!-- 四个目标模块，有趣且规整的网格布局，每个卡片清晰对应前四个目标 -->
+    <div class="goals-grid" id="goalsGrid">
+        <!-- 目标1：记忆 -->
+        <div class="goal-card" data-id="0">
+            <div class="card-header">
+                <div class="card-icon">📖🧠</div>
+                <div class="title-group">
+                    <div class="card-title">记忆 · 定义与基础</div>
+                    <div class="level-tag">布鲁姆 · 记忆</div>
+                </div>
+            </div>
+            <div class="goal-description">
+                <strong>准确说出反应速率核心表达式</strong> v = Δc/Δt ，识别单位 (mol·L⁻¹·s⁻¹ / min⁻¹)，并列举影响速率的宏观因素：温度、浓度、压强、催化剂、接触面积。
+            </div>
+            <ul class="micro-list">
+                <li>速率定义与计算式</li>
+                <li>5大影响因素 (温度/浓度/压强/催化剂/接触面积)</li>
+                <li>常见单位换算</li>
+            </ul>
+        </div>
+
+        <!-- 目标2：理解 (微观机制+碰撞理论) -->
+        <div class="goal-card" data-id="1">
+            <div class="card-header">
+                <div class="card-icon">🔬⚡</div>
+                <div class="title-group">
+                    <div class="card-title">理解 · 碰撞理论</div>
+                    <div class="level-tag">布鲁姆 · 理解</div>
+                </div>
+            </div>
+            <div class="goal-description">
+                <strong>用碰撞理论解释影响机制：</strong> 有效碰撞频率、活化能、分子取向。能阐明温度、浓度、催化剂、接触面积如何改变反应速率的内在原因。
+            </div>
+            <ul class="micro-list">
+                <li>有效碰撞三要素 (能量/取向/频率)</li>
+                <li>活化能 & 登山过岭模型</li>
+                <li>温度→分子能量分布；浓度→碰撞频率</li>
+                <li>催化剂降低活化能路径</li>
+            </ul>
+        </div>
+
+        <!-- 目标3：应用 (计算、绘图、瞬时速率) -->
+        <div class="goal-card" data-id="2">
+            <div class="card-header">
+                <div class="card-icon">📈📊</div>
+                <div class="title-group">
+                    <div class="card-title">应用 · 数据与曲线</div>
+                    <div class="level-tag">布鲁姆 · 应用</div>
+                </div>
+            </div>
+            <div class="goal-description">
+                <strong>从实验数据计算平均速率，绘制c-t / v-t曲线，运用切线法估算瞬时速率。</strong> 熟练使用“速率计算器”验证，能根据曲线变化分析速率趋势。
+            </div>
+            <ul class="micro-list">
+                <li>平均速率计算 (Δc/Δt)</li>
+                <li>浓度-时间曲线 & 速率-时间曲线</li>
+                <li>切线法求瞬时速率</li>
+                <li>速率传感器数据分析</li>
+            </ul>
+        </div>
+
+        <!-- 目标4：分析 (控制变量法 & 实验归因) -->
+        <div class="goal-card" data-id="3">
+            <div class="card-header">
+                <div class="card-icon">🔍🧪</div>
+                <div class="title-group">
+                    <div class="card-title">分析 · 控制变量</div>
+                    <div class="level-tag">布鲁姆 · 分析</div>
+                </div>
+            </div>
+            <div class="goal-description">
+                <strong>运用控制变量法设计对比实验，识别混淆变量，分析多因素交互作用。</strong> 能从数据中分离主要影响因素，并对实验方案进行批判性评估。
+            </div>
+            <ul class="micro-list">
+                <li>单一变量原则 (一变多控)</li>
+                <li>识别隐性变量 & 干扰因素</li>
+                <li>交互作用分析 (温度+催化剂协同)</li>
+                <li>实验检查单与侦探任务</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="insight-footer">
+        <span class="insight-badge">✨ 点击任意目标卡片 → 变色标记“已掌握”</span>
+        <span class="insight-badge">🌿 认知进阶四模块 · 浅绿概念地图</span>
+        <span class="insight-badge">🎯 对应布鲁姆前四层：记忆·理解·应用·分析</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 获取四个目标卡片
+        const cards = document.querySelectorAll('.goal-card');
+        const totalSpan = document.getElementById('totalCount');
+        const completedSpan = document.getElementById('completedCount');
+        const resetBtn = document.getElementById('resetBtn');
+        const total = cards.length;   // 应为4
+        totalSpan.textContent = total;
+
+        // 从localStorage读取完成状态 (保持进度，便于持续评价)
+        function loadStates() {
+            const stored = localStorage.getItem('chem_rate_four_goals');
+            if (stored) {
+                try {
+                    const completedArr = JSON.parse(stored);
+                    if (Array.isArray(completedArr) && completedArr.length === total) {
+                        cards.forEach((card, idx) => {
+                            if (completedArr[idx] === true) {
+                                card.classList.add('completed');
+                            } else {
+                                card.classList.remove('completed');
+                            }
+                        });
+                        updateCounter();
+                        return;
+                    }
+                } catch(e) { console.warn(e); }
+            }
+            // 初始无完成
+            cards.forEach(card => card.classList.remove('completed'));
+            updateCounter();
+        }
+
+        // 更新计数 & 存储
+        function updateCounter() {
+            let completedCount = 0;
+            cards.forEach(card => {
+                if (card.classList.contains('completed')) completedCount++;
+            });
+            completedSpan.textContent = completedCount;
+            // 保存数组
+            const stateArr = Array.from(cards).map(card => card.classList.contains('completed'));
+            localStorage.setItem('chem_rate_four_goals', JSON.stringify(stateArr));
+            // 可选：全部完成彩蛋效果
+            if (completedCount === total) {
+                showCongratsIfNeeded();
+            } else {
+                removeCongrats();
+            }
+        }
+
+        let congratsElement = null;
+        function showCongratsIfNeeded() {
+            if (document.getElementById('congratsMsg')) return;
+            const progressDiv = document.querySelector('.progress-panel');
+            if (progressDiv) {
+                const congrats = document.createElement('div');
+                congrats.id = 'congratsMsg';
+                congrats.style.background = '#f9e45b';
+                congrats.style.padding = '0.3rem 1rem';
+                congrats.style.borderRadius = '40px';
+                congrats.style.fontSize = '0.8rem';
+                congrats.style.fontWeight = 'bold';
+                congrats.style.color = '#1f4f1a';
+                congrats.style.marginLeft = 'auto';
+                congrats.style.display = 'inline-flex';
+                congrats.style.alignItems = 'center';
+                congrats.style.gap = '6px';
+                congrats.innerHTML = '🎉 四大目标全部点亮！速率掌控者 🎉';
+                progressDiv.appendChild(congrats);
+                setTimeout(() => {
+                    if(congrats) congrats.style.opacity = '0.9';
+                }, 10);
+            }
+        }
+
+        function removeCongrats() {
+            const existing = document.getElementById('congratsMsg');
+            if(existing) existing.remove();
+        }
+
+        // 切换卡片完成状态 + 动态动画
+        function toggleCard(card) {
+            card.classList.toggle('completed');
+            updateCounter();
+            // 轻量点击反馈
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                if (card) card.style.transform = '';
+            }, 130);
+        }
+
+        // 重置全部
+        function resetAll() {
+            cards.forEach(card => {
+                card.classList.remove('completed');
+            });
+            updateCounter();
+            // 重置时按钮动画
+            const btn = resetBtn;
+            if (btn) {
+                btn.style.transform = 'scale(0.96)';
+                setTimeout(() => { if(btn) btn.style.transform = ''; }, 150);
+            }
+            removeCongrats();
+        }
+
+        // 绑定点击事件
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleCard(card);
+            });
+        });
+
+        resetBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetAll();
+        });
+
+        // 初始化
+        loadStates();
+    })();
+</script>
+</body>
+</html>

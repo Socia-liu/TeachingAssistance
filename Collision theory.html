@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>碰撞理论模拟器 | 化学反应速率 · 交互式PhET风格</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(145deg, #d8eed4 0%, #c0e0b8 100%);
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* 主卡片容器 */
+        .sim-card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(248, 255, 240, 0.85);
+            backdrop-filter: blur(3px);
+            border-radius: 3rem;
+            box-shadow: 0 20px 35px rgba(40, 70, 30, 0.25);
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        /* 头部标题 */
+        .sim-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .sim-header h1 {
+            font-size: 1.9rem;
+            background: #2a6b2f;
+            display: inline-block;
+            padding: 0.4rem 1.8rem;
+            border-radius: 60px;
+            color: #fef7cf;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 0 #1e4a22;
+        }
+        .sub {
+            text-align: center;
+            color: #2a5a2a;
+            font-weight: 500;
+            margin: 8px 0 5px;
+        }
+
+        /* 双栏布局: canvas + 控制区 */
+        .sim-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        .canvas-area {
+            flex: 2;
+            min-width: 280px;
+            background: #fefef2;
+            border-radius: 2rem;
+            padding: 12px;
+            box-shadow: inset 0 0 0 2px #e2f0d4, 0 8px 18px rgba(0,0,0,0.1);
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            background: #fefcf0;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .control-panel {
+            flex: 1.2;
+            min-width: 260px;
+            background: #eef5e9dd;
+            backdrop-filter: blur(2px);
+            border-radius: 1.8rem;
+            padding: 1rem 1.2rem;
+            border: 1px solid #c2dfb0;
+            box-shadow: 0 8px 14px rgba(60, 70, 40, 0.1);
+        }
+
+        /* 控制组 */
+        .ctrl-group {
+            margin-bottom: 1.3rem;
+        }
+        .ctrl-group label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: #235b23;
+            margin-bottom: 6px;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: #4c8b3c;
+            background: #e0efd4;
+            height: 5px;
+            border-radius: 10px;
+        }
+        .value-badge {
+            background: white;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1f4f1a;
+        }
+        .stat-grid {
+            background: #ffffffb3;
+            border-radius: 1.2rem;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stat-card {
+            text-align: center;
+            background: #eef3e9;
+            border-radius: 1rem;
+            padding: 6px;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #416a36;
+        }
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1c481c;
+            line-height: 1;
+        }
+        button {
+            background: #f0f7ea;
+            border: 1.5px solid #5a9e46;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #2a6b2a;
+            cursor: pointer;
+            transition: 0.1s;
+            margin-right: 8px;
+            margin-top: 6px;
+        }
+        button:hover {
+            background: #e0f0d4;
+            transform: scale(0.97);
+        }
+        .ea-indicator {
+            background: #d9e8cf;
+            border-radius: 20px;
+            padding: 6px 12px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        hr {
+            border-color: #c2dfb0;
+            margin: 12px 0;
+        }
+        .footer-note {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #3a6e3a;
+            margin-top: 1rem;
+        }
+        @media (max-width: 760px) {
+            .sim-card { padding: 1rem; }
+            .stat-number { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="sim-card">
+    <div class="sim-header">
+        <h1>⚛️ 碰撞理论 · 动态模拟器</h1>
+        <div class="sub">🔬 调节温度 / 粒子数 / 催化剂 | 观察有效碰撞频率与速率变化</div>
+    </div>
+    <div class="sim-layout">
+        <div class="canvas-area">
+            <canvas id="collisionCanvas" width="800" height="450" style="width:100%; height:auto; max-width:800px; aspect-ratio:800/450"></canvas>
+            <div class="footer-note" style="margin-top:8px">
+                💡 粒子碰撞时 <span style="background:#ffd966; padding:0 6px; border-radius:20px;">金色闪光</span> = 有效碰撞(动能＞活化能) &nbsp;&nbsp;|&nbsp;&nbsp; 灰色普通碰撞
+            </div>
+        </div>
+        <div class="control-panel">
+            <div class="ctrl-group">
+                <label>🌡️ 温度因子 <span id="tempValue" class="value-badge">1.00</span></label>
+                <input type="range" id="tempSlider" min="0.4" max="2.2" step="0.01" value="1.0">
+                <div class="stat-card" style="margin-top:6px; background:#e3f0da;">🔥 高温 → 分子运动加快 → 碰撞频率↑ 有效碰撞比例↑</div>
+            </div>
+            <div class="ctrl-group">
+                <label>🧪 相对浓度 (粒子数) <span id="concValue" class="value-badge">20</span></label>
+                <input type="range" id="concSlider" min="8" max="48" step="1" value="20">
+                <div style="font-size:0.7rem; color:#3c6e2f;">浓度↑ → 粒子数↑ → 碰撞频率显著增加</div>
+            </div>
+            <div class="ctrl-group">
+                <label>⚗️ 催化剂作用 (降低活化能) 
+                    <span id="catalystStatus" class="value-badge" style="background:#d9e6cf;">关闭</span>
+                </label>
+                <button id="catalystBtn" style="background:#eef2e0;">🔘 启用催化剂</button>
+                <div class="ea-indicator" id="eaDisplay">⚡ 当前活化能阈值: 100 (相对单位)</div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card"><div class="stat-label">总碰撞次数</div><div class="stat-number" id="totalCollision">0</div></div>
+                <div class="stat-card"><div class="stat-label">✅ 有效碰撞</div><div class="stat-number" id="effectiveCollision">0</div></div>
+                <div class="stat-card"><div class="stat-label">📈 有效比例</div><div class="stat-number" id="effRatio">0%</div></div>
+                <div class="stat-card"><div class="stat-label">⚡ 有效碰撞/秒</div><div class="stat-number" id="ratePerSec">0.0</div></div>
+            </div>
+            <div style="display:flex; justify-content: space-between; gap:6px;">
+                <button id="pauseBtn">⏸️ 暂停</button>
+                <button id="resetBtn">🔄 重置模拟</button>
+            </div>
+            <hr>
+            <div style="font-size:0.75rem; line-height:1.4; color:#2c5a2c;">
+                🧪 <strong>碰撞理论核心</strong>：有效碰撞需满足足够动能+合适取向。<br>
+                • 升温 → 粒子动能↑ → 超过活化能阈值比例↑<br>
+                • 催化剂 → 降低活化能壁垒 → 更多碰撞变为有效<br>
+                • 浓度↑ → 单位体积粒子数↑ → 碰撞频率↑
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function(){
+        // -------- 物理参数 ----------
+        const canvas = document.getElementById('collisionCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = 800, height = 450;
+        canvas.width = width;
+        canvas.height = height;
+
+        // 粒子参数
+        let particles = [];
+        const BASE_RADIUS = 6;
+        const MIN_RADIUS = 5;
+        const MAX_SPEED = 9.5;
+        let particleCount = 20;      // 初始20
+        let temperatureFactor = 1.0;  // 温度系数影响速度大小
+        let baseEa = 100.0;           // 基础活化能阈值（相对动能阈值）
+        let currentEa = baseEa;       // 当前活化能 (催化剂影响)
+        let catalystActive = false;
+        
+        // 统计数据
+        let totalCollisions = 0;
+        let effectiveCollisions = 0;
+        let lastTimestamp = 0;
+        let effectivePerSecond = 0;
+        let lastSecondCollisions = 0;
+        let lastSecondTime = 0;
+        
+        // 动画控制
+        let animationId = null;
+        let paused = false;
+        
+        // 特效数组 {x, y, life}
+        let flashEffects = [];
+        
+        // 辅助变量: 每次有效碰撞时记录闪光位置 (粒子对中心)
+        
+        // -------- 初始化粒子（随机位置、随机速度，基于温度因子）---------
+        function randomSpeed(tempFactor) {
+            // 模拟麦克斯韦分布简易版本：速度范围与温度平方根成正比
+            let scale = 1.5 * Math.sqrt(tempFactor);
+            let vx = (Math.random() - 0.5) * scale * 2.2;
+            let vy = (Math.random() - 0.5) * scale * 2.2;
+            let max = MAX_SPEED;
+            vx = Math.min(max, Math.max(-max, vx));
+            vy = Math.min(max, Math.max(-max, vy));
+            return {vx, vy};
+        }
+        
+        function initParticles(count, temp) {
+            let newParticles = [];
+            let maxAttempts = 2000;
+            for(let i=0; i<count; i++) {
+                let radius = BASE_RADIUS;
+                let overlap = true;
+                let attempts = 0;
+                let x, y;
+                while(overlap && attempts < maxAttempts) {
+                    x = radius + Math.random() * (width - 2*radius);
+                    y = radius + Math.random() * (height - 2*radius);
+                    overlap = false;
+                    for(let p of newParticles) {
+                        let dx = p.x - x, dy = p.y - y;
+                        let dist = Math.hypot(dx,dy);
+                        if(dist < (p.radius + radius)) {
+                            overlap = true;
+                            break;
+                        }
+                    }
+                    attempts++;
+                }
+                let speed = randomSpeed(temp);
+                newParticles.push({
+                    x: x, y: y, radius: radius,
+                    vx: speed.vx, vy: speed.vy,
+                    // 用于临时高亮 (碰撞闪烁)
+                    highlight: 0
+                });
+            }
+            return newParticles;
+        }
+        
+        // 重置统计
+        function resetStats() {
+            totalCollisions = 0;
+            effectiveCollisions = 0;
+            effectivePerSecond = 0;
+            lastSecondCollisions = 0;
+            lastSecondTime = performance.now() / 1000;
+            updateStatsDisplay();
+        }
+        
+        // 根据温度因子重新调整所有粒子的速度 (维持能量分布)
+        function adjustVelocityByTemperature(newFactor, oldFactor) {
+            if(oldFactor === 0) oldFactor = 1;
+            let ratio = Math.sqrt(newFactor / oldFactor);
+            for(let p of particles) {
+                let newVx = p.vx * ratio;
+                let newVy = p.vy * ratio;
+                let spd = Math.hypot(newVx, newVy);
+                if(spd > MAX_SPEED) {
+                    newVx = (newVx / spd) * MAX_SPEED;
+                    newVy = (newVy / spd) * MAX_SPEED;
+                }
+                p.vx = newVx;
+                p.vy = newVy;
+            }
+        }
+        
+        // 改变粒子数量 (重新初始化，保持当前温度&动量分布)
+        function changeParticleCount(newCount) {
+            particleCount = Math.min(60, Math.max(6, newCount));
+            let oldTemp = temperatureFactor;
+            particles = initParticles(particleCount, temperatureFactor);
+            // 确保速度符合当前温度因子
+            for(let p of particles) {
+                let target = randomSpeed(temperatureFactor);
+                p.vx = target.vx;
+                p.vy = target.vy;
+            }
+            resetStats();
+        }
+        
+        // 应用催化剂 (改变活化能)
+        function setCatalyst(active) {
+            catalystActive = active;
+            if(catalystActive) {
+                currentEa = baseEa * 0.45;  // 降低55% 明显效果
+                document.getElementById('catalystStatus').innerText = "启用 ⚡";
+                document.getElementById('catalystBtn').style.background = "#d4e8c4";
+            } else {
+                currentEa = baseEa;
+                document.getElementById('catalystStatus').innerText = "关闭";
+                document.getElementById('catalystBtn').style.background = "#eef2e0";
+            }
+            document.getElementById('eaDisplay').innerHTML = `⚡ 当前活化能阈值: ${Math.round(currentEa)} (相对单位)`;
+        }
+        
+        // 更新UI显示统计
+        function updateStatsDisplay() {
+            document.getElementById('totalCollision').innerText = totalCollisions;
+            document.getElementById('effectiveCollision').innerText = effectiveCollisions;
+            let ratio = totalCollisions === 0 ? 0 : (effectiveCollisions / totalCollisions * 100);
+            document.getElementById('effRatio').innerText = ratio.toFixed(1) + "%";
+            document.getElementById('ratePerSec').innerText = effectivePerSecond.toFixed(1);
+        }
+        
+        // 处理粒子碰撞（物理弹性碰撞 + 判断有效碰撞）
+        function handleCollisions() {
+            for(let i = 0; i < particles.length; i++) {
+                for(let j = i+1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.hypot(dx, dy);
+                    const minDist = p1.radius + p2.radius;
+                    if(dist < minDist) {
+                        // 发生碰撞，统计碰撞次数
+                        totalCollisions++;
+                        
+                        // 计算相对速度法向分量动能 (判断有效碰撞)
+                        const nx = dx / dist;
+                        const ny = dy / dist;
+                        const vrelx = p1.vx - p2.vx;
+                        const vrely = p1.vy - p2.vy;
+                        const vrelNorm = vrelx * nx + vrely * ny;
+                        // 相对动能 (约化质量等效，质量相同，取 0.5*m*vrel^2，m设为1，动能 = 0.5 * (vrelNorm^2) )
+                        // 为了对比阈值，我们直接用相对法向速度平方 * 0.5 作为动能指标，阈值Ea基于单位质量
+                        let kineticRel = 0.5 * (vrelNorm * vrelNorm);
+                        let isEffective = (kineticRel > currentEa);
+                        if(isEffective) {
+                            effectiveCollisions++;
+                            // 添加闪光特效 (碰撞中心)
+                            const cx = (p1.x + p2.x)/2;
+                            const cy = (p1.y + p2.y)/2;
+                            flashEffects.push({x: cx, y: cy, life: 0.7});
+                            // 同时给两个粒子高亮提示 (短暂变色)
+                            p1.highlight = 0.4;
+                            p2.highlight = 0.4;
+                        } else {
+                            // 普通碰撞浅灰闪一下
+                            flashEffects.push({x: (p1.x+p2.x)/2, y: (p1.y+p2.y)/2, life: 0.3, normal: true});
+                        }
+                        
+                        // 弹性碰撞处理 (质量相同)
+                        const vrelTangentX = -vrely;
+                        const vrelTangentY = vrelx;
+                        // 碰撞后法向速度交换
+                        const v1n = (p1.vx * nx + p1.vy * ny);
+                        const v2n = (p2.vx * nx + p2.vy * ny);
+                        const v1n_after = v2n;
+                        const v2n_after = v1n;
+                        // 切向速度不变
+                        const v1t_x = p1.vx - v1n * nx;
+                        const v1t_y = p1.vy - v1n * ny;
+                        const v2t_x = p2.vx - v2n * nx;
+                        const v2t_y = p2.vy - v2n * ny;
+                        p1.vx = v1t_x + v1n_after * nx;
+                        p1.vy = v1t_y + v1n_after * ny;
+                        p2.vx = v2t_x + v2n_after * nx;
+                        p2.vy = v2t_y + v2n_after * ny;
+                        
+                        // 位置修正，避免粘连
+                        const overlap = minDist - dist;
+                        const correctionX = (dx / dist) * (overlap * 0.5);
+                        const correctionY = (dy / dist) * (overlap * 0.5);
+                        p1.x += correctionX;
+                        p1.y += correctionY;
+                        p2.x -= correctionX;
+                        p2.y -= correctionY;
+                    }
+                }
+            }
+            // 边界碰撞（边界不统计额外碰撞，但边界无有效碰撞概念）
+            for(let p of particles) {
+                if(p.x - p.radius < 0) { p.x = p.radius; p.vx = -p.vx; }
+                if(p.x + p.radius > width) { p.x = width - p.radius; p.vx = -p.vx; }
+                if(p.y - p.radius < 0) { p.y = p.radius; p.vy = -p.vy; }
+                if(p.y + p.radius > height) { p.y = height - p.radius; p.vy = -p.vy; }
+            }
+        }
+        
+        // 更新粒子位置 (欧拉积分)
+        function updatePositions(dt) {
+            if(dt > 0.03) dt = 0.03; // 限制最大步长
+            for(let p of particles) {
+                p.x += p.vx * dt;
+                p.y += p.vy * dt;
+            }
+        }
+        
+        // 每秒有效碰撞速率计算
+        function updateRateStats(nowSec) {
+            if(!lastSecondTime) {
+                lastSecondTime = nowSec;
+                lastSecondCollisions = effectiveCollisions;
+                return;
+            }
+            let delta = nowSec - lastSecondTime;
+            if(delta >= 1.0) {
+                let diff = effectiveCollisions - lastSecondCollisions;
+                effectivePerSecond = diff / delta;
+                lastSecondCollisions = effectiveCollisions;
+                lastSecondTime = nowSec;
+                updateStatsDisplay();
+            }
+        }
+        
+        // 绘制画布（粒子，高亮，特效）
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            // 绘制网格线（浅参考线）
+            ctx.save();
+            ctx.strokeStyle = "#cfe2c0";
+            ctx.lineWidth = 0.5;
+            for(let i=0; i<width; i+=40) {
+                ctx.beginPath();
+                ctx.moveTo(i,0);
+                ctx.lineTo(i,height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0,i%height);
+                ctx.lineTo(width,i%height);
+                ctx.stroke();
+            }
+            // 绘制粒子
+            for(let p of particles) {
+                let gradient = ctx.createRadialGradient(p.x-3, p.y-3, 2, p.x, p.y, p.radius);
+                if(p.highlight > 0) {
+                    gradient.addColorStop(0, '#FFD966');
+                    gradient.addColorStop(1, '#E6B422');
+                } else {
+                    gradient.addColorStop(0, '#7FB073');
+                    gradient.addColorStop(1, '#3D6B37');
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.strokeStyle = "#2b482b";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                // 添加小高光
+                ctx.beginPath();
+                ctx.arc(p.x-2, p.y-2, 2, 0, Math.PI*2);
+                ctx.fillStyle = "#fff8e7";
+                ctx.fill();
+                // 高亮衰减
+                if(p.highlight > 0) p.highlight -= 0.03;
+                if(p.highlight < 0) p.highlight = 0;
+            }
+            // 绘制闪光特效
+            for(let i=0; i<flashEffects.length; i++) {
+                let f = flashEffects[i];
+                let alpha = Math.min(0.8, f.life * 1.2);
+                let radiusGlow = 12 * (1 - f.life) + 6;
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, radiusGlow, 0, Math.PI*2);
+                let glowColor = f.normal ? "#c0c0c0" : "#FFBF40";
+                ctx.fillStyle = glowColor;
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                f.life -= 0.04;
+            }
+            flashEffects = flashEffects.filter(f => f.life > 0);
+            ctx.shadowBlur = 0;
+            
+            // 绘制动能指示（可选: 显示相对动能超阈值示意）
+            ctx.font = "bold 12px 'Segoe UI'";
+            ctx.fillStyle = "#2d5a2c";
+            ctx.shadowBlur = 0;
+            ctx.fillText("⚛️ 每个圆点 = 分子 | 碰撞时闪光代表有效碰撞", 15, 30);
+            ctx.restore();
+        }
+        
+        // 主循环
+        let lastFrameTime = 0;
+        function animate(nowMs) {
+            if(paused) {
+                animationId = requestAnimationFrame(animate);
+                return;
+            }
+            let nowSec = nowMs / 1000;
+            if(lastFrameTime === 0) {
+                lastFrameTime = nowSec;
+                animationId = requestAnimationFrame(animate);
+                return;
+            }
+            let dt = Math.min(0.033, nowSec - lastFrameTime);
+            if(dt <= 0) {
+                lastFrameTime = nowSec;
+                animationId = requestAnimationFrame(animate);
+                return;
+            }
+            // 更新位置
+            updatePositions(dt);
+            // 处理碰撞（统计+物理）
+            handleCollisions();
+            // 更新速率显示
+            updateRateStats(nowSec);
+            // 刷新统计显示（数字）
+            let ratio = totalCollisions === 0 ? 0 : (effectiveCollisions / totalCollisions * 100);
+            document.getElementById('effRatio').innerText = ratio.toFixed(1) + "%";
+            document.getElementById('totalCollision').innerText = totalCollisions;
+            document.getElementById('effectiveCollision').innerText = effectiveCollisions;
+            document.getElementById('ratePerSec').innerText = effectivePerSecond.toFixed(1);
+            
+            draw();
+            lastFrameTime = nowSec;
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        // ----- 事件绑定 & UI联动 -------
+        const tempSlider = document.getElementById('tempSlider');
+        const concSlider = document.getElementById('concSlider');
+        const catalystBtn = document.getElementById('catalystBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        let oldTemp = 1.0;
+        tempSlider.addEventListener('input', (e) => {
+            let newTemp = parseFloat(e.target.value);
+            document.getElementById('tempValue').innerText = newTemp.toFixed(2);
+            adjustVelocityByTemperature(newTemp, temperatureFactor);
+            temperatureFactor = newTemp;
+        });
+        
+        concSlider.addEventListener('input', (e) => {
+            let newConc = parseInt(e.target.value);
+            document.getElementById('concValue').innerText = newConc;
+            changeParticleCount(newConc);
+            particleCount = newConc;
+            resetStats();
+        });
+        
+        catalystBtn.addEventListener('click', () => {
+            setCatalyst(!catalystActive);
+        });
+        
+        pauseBtn.addEventListener('click', () => {
+            paused = !paused;
+            pauseBtn.innerText = paused ? "▶️ 启动" : "⏸️ 暂停";
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            // 重置所有参数为默认，粒子数量、温度等
+            temperatureFactor = 1.0;
+            tempSlider.value = "1.0";
+            document.getElementById('tempValue').innerText = "1.00";
+            particleCount = 20;
+            concSlider.value = "20";
+            document.getElementById('concValue').innerText = "20";
+            setCatalyst(false);
+            catalystActive = false;
+            currentEa = baseEa;
+            document.getElementById('eaDisplay').innerHTML = `⚡ 当前活化能阈值: ${Math.round(currentEa)} (相对单位)`;
+            particles = initParticles(particleCount, temperatureFactor);
+            for(let p of particles) {
+                let sp = randomSpeed(temperatureFactor);
+                p.vx = sp.vx; p.vy = sp.vy;
+            }
+            totalCollisions = 0;
+            effectiveCollisions = 0;
+            effectivePerSecond = 0;
+            lastSecondCollisions = 0;
+            lastSecondTime = performance.now()/1000;
+            flashEffects = [];
+            updateStatsDisplay();
+            if(paused) {
+                paused = false;
+                pauseBtn.innerText = "⏸️ 暂停";
+            }
+        });
+        
+        // 初始化世界
+        function setup() {
+            particleCount = 20;
+            particles = initParticles(particleCount, temperatureFactor);
+            resetStats();
+            setCatalyst(false);
+            lastSecondTime = performance.now() / 1000;
+            lastSecondCollisions = 0;
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        setup();
+        // 窗口resize保持比例
+        window.addEventListener('resize', () => {
+            // canvas尺寸CSS自适应，逻辑分辨率不变
+        });
+    })();
+</script>
+</body>
+</html>

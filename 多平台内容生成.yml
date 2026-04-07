@@ -1,0 +1,1258 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: 多平台内容生成
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.12@37699cc3d1ea9e006348a7273a514f3ddf60ffb0649dc735c594c8da6a80934b
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/ollama:0.1.3@66e156c4f612964c131c49168882e78c2cdfe366879506b97ad855b23c5d6d98
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1774939862881-source-1774939921659-target
+      selected: false
+      source: '1774939862881'
+      sourceHandle: source
+      target: '1774939921659'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774939921659-source-1774936802991-target
+      selected: false
+      source: '1774939921659'
+      sourceHandle: source
+      target: '1774936802991'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774939921659-source-1774936912940-target
+      selected: false
+      source: '1774939921659'
+      sourceHandle: source
+      target: '1774936912940'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774939921659-source-1774937574263-target
+      selected: false
+      source: '1774939921659'
+      sourceHandle: source
+      target: '1774937574263'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774939921659-source-1774937576503-target
+      selected: false
+      source: '1774939921659'
+      sourceHandle: source
+      target: '1774937576503'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774939921659-source-1774937578504-target
+      selected: false
+      source: '1774939921659'
+      sourceHandle: source
+      target: '1774937578504'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: question-classifier
+      id: 1774936752242-source-1774941314324-target
+      source: '1774936752242'
+      sourceHandle: source
+      target: '1774941314324'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: 1774941314324-1-1774939862881-target
+      source: '1774941314324'
+      sourceHandle: '1'
+      target: '1774939862881'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: 1774941314324-2-1774941360143-target
+      source: '1774941314324'
+      sourceHandle: '2'
+      target: '1774941360143'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1774941360143-source-1774939921659-target
+      source: '1774941360143'
+      sourceHandle: source
+      target: '1774939921659'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774936802991-source-1774940016019-target
+      source: '1774936802991'
+      sourceHandle: source
+      target: '1774940016019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774936912940-source-1774940016019-target
+      source: '1774936912940'
+      sourceHandle: source
+      target: '1774940016019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774937574263-source-1774940016019-target
+      source: '1774937574263'
+      sourceHandle: source
+      target: '1774940016019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774937576503-source-1774940016019-target
+      source: '1774937576503'
+      sourceHandle: source
+      target: '1774940016019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774937578504-source-1774940016019-target
+      source: '1774937578504'
+      sourceHandle: source
+      target: '1774940016019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: human-input
+      id: 1774936802991-source-1775201201942-target
+      source: '1774936802991'
+      sourceHandle: source
+      target: '1775201201942'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: human-input
+      id: 1774936912940-source-1775201201942-target
+      source: '1774936912940'
+      sourceHandle: source
+      target: '1775201201942'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: human-input
+      id: 1774937574263-source-1775201201942-target
+      source: '1774937574263'
+      sourceHandle: source
+      target: '1775201201942'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: human-input
+      id: 1774937576503-source-1775201201942-target
+      source: '1774937576503'
+      sourceHandle: source
+      target: '1775201201942'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: human-input
+      id: 1774937578504-source-1775201201942-target
+      source: '1774937578504'
+      sourceHandle: source
+      target: '1775201201942'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: human-input
+        targetType: llm
+      id: 1775201201942-HTML-1774940055130-target
+      source: '1775201201942'
+      sourceHandle: HTML
+      target: '1774940055130'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: human-input
+        targetType: end
+      id: 1775201201942-__timeout-1775202013203-target
+      source: '1775201201942'
+      sourceHandle: __timeout
+      target: '1775202013203'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1774940016019-source-1775202019174-target
+      source: '1774940016019'
+      sourceHandle: source
+      target: '1775202019174'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1774940055130-source-1775202065312-target
+      source: '1774940055130'
+      sourceHandle: source
+      target: '1775202065312'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 知识
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: knowledge
+      height: 109
+      id: '1774936752242'
+      position:
+        x: 415.67110111907357
+        y: -35.611851064924224
+      positionAbsolute:
+        x: 415.67110111907357
+        y: -35.611851064924224
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 梅里尔：问题驱动高效教学框架
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 7e9b9ba6-54ef-4f19-939d-5aa9b17b72c7
+          role: system
+          text: "你是一位精通梅里尔（Merrill）五星教学设计（首要教学原理）的课程专家。请严格遵循下面的 **“五星教学设计流程”** ，针对用户提供的【教材章节知识】内容，生成一份专业、具体、可操作的教学设计文稿。\n\
+            \n**理论框架：五星教学设计流程（含螺旋循环）**\n\n1. **聚焦问题**：这是最重要的一步。将具体的教学任务（事实、概念、程序、原理等）置于循序渐进的实际问题解决情境中。先向学习者呈现一个真实、完整、有意义的问题，而非直接讲解知识。\n\
+            \n2. **激活旧知**：引导学生回忆和关联已有经验：\n   - 回忆已有的相关知识和技能\n   - 利用已有经验解释新现象\n  \
+            \ - 建立新旧知识的联系\n\n3. **示证新知**：清晰展示新知识和技能：\n   - 紧扣教学目标进行示范讲解\n   - 展示知识在具体情境中的应用\n\
+            \   - 突出关键特征，多种方式呈现\n\n4. **尝试应用**：让学生在问题情境中应用新知：\n   - 提供有指导的练习机会\n \
+            \  - 通过反馈和辅导让学习者独立解决问题\n   - 练习难度循序渐进\n\n5. **融会贯通**：将新知与已有知识网络整合：\n \
+            \  - 设计知识迁移的应用场景\n   - 鼓励学生对所学进行反思和总结\n   - 促进知识在实际生活中的应用\n\n6. **螺旋循环**：上述四阶段（激活→示证→应用→整合）并非一次完成，而是不断重复的螺旋上升过程，每个循环都将学生的理解推向更深层次。教学设计中应体现多个循环，每个循环解决一个子问题或更深一层的问题。\n\
+            \n**输入：教材章节知识**\n{{#1774936752242.knowledge#}}\n\n**输出要求：**\n请按照以下结构化格式输出完整的教学设计文稿。所有内容必须紧密结合输入的【教材章节知识】进行具体设计，避免空泛。使用清晰的标题、列表、表格等增强可读性。\n\
+            \n---\n\n## 《[根据章节知识自拟课题]》——基于五星教学设计流程的教学设计\n\n### 一、核心问题设计（聚焦问题）\n- **核心问题（真实、完整、有意义）**：\n\
+            - **问题如何循序渐进地展开**：（列出2-3个由浅入深的子问题，形成问题链）\n- **知识在问题解决中的角色**：（说明本单元的事实/概念/程序/原理如何服务于解决上述问题）\n\
+            \n### 二、教学流程详案（体现螺旋循环）\n\n**说明**：本设计采用螺旋循环结构，包含____个学习循环（Cycle）。每个循环独立包含“激活旧知→示证新知→尝试应用→融会贯通”四个阶段，但深度逐次增加。\n\
+            \n#### 【循环一】基础层：……\n\n| 阶段 | 具体教学活动设计（结合本章节内容） | 教师活动 | 学生活动 | 时间预估 |\n\
+            |------|----------------------------------|----------|----------|----------|\n\
+            | **激活旧知** | （引导学生回忆与第一个子问题相关的已有经验、技能或生活常识） | | | |\n| **示证新知** | （展示解决第一个子问题所需的新知识/技能，突出关键特征，示例示范）\
+            \ | | | |\n| **尝试应用** | （提供有指导的练习，让学生在类似情境中使用新知解决问题） | | | |\n| **融会贯通**\
+            \ | （将本循环所学与已有知识整合，完成第一个子问题的完整解答或产品） | | | |\n\n#### 【循环二】进阶层：……\n\n（同上结构，解决第二个、更复杂的子问题，激活前一个循环的知识，示证更深层的新知，应用，整合）\n\
+            \n#### 【循环三】（如有）拓展层：……\n\n（解决更开放或更接近真实世界复杂性的子问题，促进高阶迁移）\n\n### 三、各阶段实施要点汇总（非表格形式）\n\
+            - **聚焦问题的具体体现**：（说明核心问题如何贯穿始终，每个循环如何服务于最终问题解决）\n- **激活旧知的多样化策略**：（列举本设计中使用的唤醒经验的方法）\n\
+            - **示证新知的多种呈现方式**：（如图示、类比、实例、多媒体等）\n- **尝试应用中的指导与反馈设计**：（如何提供脚手架，如何逐步撤除）\n\
+            - **融会贯通的迁移与反思设计**：（如何引导学生总结、对比、反思，设计生活化迁移任务）\n\n### 四、螺旋循环的迭代说明\n- 本设计共设计____个循环。\n\
+            - 循环之间如何递进？（知识深度、问题复杂度、学生自主度等方面的变化）\n- 若需要更多循环以适应不同学生，可如何扩展？\n\n### 五、教学评价方案\n\
+            - **形成性评价**：（在每个循环的“尝试应用”阶段如何即时评估？）\n- **总结性评价**：（最终学生能否独立解决核心问题？用什么表现性任务证明？）\n\
+            - **评价量规简表**：（核心评价维度与等级描述）\n\n**注意事项：**\n- 核心问题必须是真实的、完整的、有意义的，不能是“什么是X”之类的事实性问题。\n\
+            - 每个循环必须包含全部四个阶段，但可以根据内容调整各阶段比重。\n- “示证新知”不能只是灌输定义，要展示知识如何用于解决问题。\n- “尝试应用”要体现从有指导到独立的过渡。\n\
+            - 螺旋循环要求后一个循环基于前一个循环的成果，不能简单重复。\n- 语言精炼、专业，直接输出结果，无需额外解释。"
+        selected: false
+        structured_output_enabled: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1774936802991'
+      position:
+        x: 758.8209881080323
+        y: 883.9055989585191
+      positionAbsolute:
+        x: 758.8209881080323
+        y: 883.9055989585191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 加涅：认知匹配教学流程框架
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 2831cb1d-93a6-444a-a2cd-224211551576
+          role: system
+          text: '你是一位精通加涅（Gagné）教学理论的教学设计专家。请严格遵循下面的 **“九步教学事件”** 流程，针对用户提供的【教材章节知识】内容，生成一份专业、具体、可操作的教学设计文稿。
+
+
+            **理论框架：加涅九步教学事件**
+
+
+            加涅认为，教学活动应按照学生内部认知加工过程设计九个外部事件。九个事件分别是：
+
+
+            | 教学事件 | 内部学习过程 | 具体操作示例 |
+
+            |---------|-------------|--------------|
+
+            | 1. 引起注意 | 接受各种神经冲动 | 通过提问、情境变化、多媒体刺激等方式激发求知欲 |
+
+            | 2. 告知学习目标 | 激活执行控制过程 | 明确告知学生本堂课的学习目标和预期结果 |
+
+            | 3. 刺激回忆 | 把先前内容提取到短时记忆中 | 引导学生回忆与新知相关的先前学习内容 |
+
+            | 4. 呈现刺激材料 | 有助于选择性知觉 | 展示新知识，突出关键特征和逻辑结构 |
+
+            | 5. 提供学习指导 | 语义编码 | 通过编码策略帮助学生建构意义，进行示范和讲解 |
+
+            | 6. 引出行为 | 反应生成 | 让学生表现所学内容，进行练习和实践 |
+
+            | 7. 提供反馈 | 强化 | 给予矫正性或鼓励性反馈，帮助学生调整 |
+
+            | 8. 评价行为 | 获得强化 | 评估学习成效，评定成绩并加以强化 |
+
+            | 9. 促进保持和迁移 | 帮助知识归类、重组 | 设计拓展练习，促进知识在新情境中的应用 |
+
+
+            **实施要点：**
+
+            - 活动设计需结合学生能力差异，使其从自身起点循序渐进达成目标。
+
+            - 九大教学事件不一定是严格线性的，可根据具体内容进行合并或调整。
+
+            - 不同类型的知识（言语信息、智力技能、认知策略、动作技能、态度）需要不同的教学条件和策略。在教学设计中请明确指出本单元主要涉及的知识类型，并据此调整各事件的具体操作。
+
+
+            **输入：教材章节知识**
+
+            {{#1774936752242.knowledge#}}
+
+
+            **输出要求：**
+
+            请按照以下结构化格式输出完整的教学设计文稿。所有内容必须紧密结合输入的【教材章节知识】进行具体设计，不得空泛。使用清晰的标题、列表、表格等增强可读性。
+
+
+            ---
+
+
+            ## 《[根据章节知识自拟课题]》——基于加涅九步教学事件的教学设计
+
+
+            ### 一、前置分析
+
+            - **本单元/本节课主要知识类型**：（从“言语信息/智力技能/认知策略/动作技能/态度”中选择1-2个，并说明理由）
+
+            - **学生起点能力分析**：（简要说明学生已具备的与新知相关的前置知识或技能）
+
+            - **核心教学目标**：（1-2条，使用“学生能够……”的行为目标句式）
+
+
+            ### 二、九步教学事件详细设计
+
+
+            | 教学事件 | 具体教学活动设计（结合本章节内容） | 时间预估 | 对应知识类型的特殊处理 |
+
+            |---------|----------------------------------|----------|----------------------|
+
+            | 1. 引起注意 | （设计一个能激发好奇心的开场：如反常识提问、短故事、演示现象、情境问题等，必须与本单元知识直接相关） | X分钟 |
+            |
+
+            | 2. 告知学习目标 | （用学生能理解的语言清晰陈述本课目标，例如：“今天我们将学会……”“下课前你能做到……”） | 1-2分钟 |
+            |
+
+            | 3. 刺激回忆 | （设计一个回忆活动：提问、小测验、快速回顾、概念图补全等，指向本课所需的前置知识） | X分钟 | |
+
+            | 4. 呈现刺激材料 | （展示新知识的方式：讲解、图示、演示、视频、文本等。需突出关键特征，如定义、原理、步骤、范例等） | X分钟 |
+            |
+
+            | 5. 提供学习指导 | （帮助学生编码和建构意义的策略：类比、记忆术、概念图、案例分析、示范思维过程、提供脚手架等） | X分钟 | |
+
+            | 6. 引出行为 | （让学生实践或表现所学：练习、小组讨论、角色扮演、操作、口头回答等，需明确学生要做的具体事情） | X分钟 | |
+
+            | 7. 提供反馈 | （设计反馈方式：即时口头反馈、集体纠错、同伴反馈、批注等。区分矫正性反馈和鼓励性反馈） | X分钟 | |
+
+            | 8. 评价行为 | （评估学生是否达成目标：课堂小测、作品评价、表现性任务评分、自我评价表等，需与教学目标对齐） | X分钟 | |
+
+            | 9. 促进保持和迁移 | （设计拓展活动：变式练习、新情境应用题、跨学科联系、生活应用任务等，帮助学生巩固和迁移） | X分钟 | |
+
+
+            ### 三、教学事件调整说明（可选）
+
+            - （若根据实际需要合并、调序或省略某些事件，请在此说明理由，例如“因本课为连续课时中的第二课，故省略‘引起注意’，直接从复习导入开始”）
+
+
+            ### 四、教学资源准备清单
+
+            - （列出本课所需的多媒体、学具、工作单、平台等）
+
+
+            **注意事项：**
+
+            - 每一步设计都要紧扣【教材章节知识】的具体内容，不能套用通用模板。
+
+            - “引起注意”必须是有认知冲突或情感触动的事件，而非简单的“同学们好”。
+
+            - “提供学习指导”要体现如何帮助学生深层理解，而非只是重复呈现材料。
+
+            - “引出行为”要让学生真正“做”出来，而不是听讲或被动观看。
+
+            - 反馈和评价要具体、可操作。
+
+            - 语言精炼、专业，直接输出结果，无需额外解释。'
+        selected: false
+        title: LLM 2
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1774936912940'
+      position:
+        x: 758.8209881080323
+        y: 753.8809944971639
+      positionAbsolute:
+        x: 758.8209881080323
+        y: 753.8809944971639
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 帕金斯：理解为先教学设计框架
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: bad14ec5-cf36-4258-980d-cc1059af16f3
+          role: system
+          text: "你是一位精通帕金斯（Perkins）“理解性学习与表现”框架的课程设计专家。请严格遵循下面的五步设计流程，针对用户提供的【教材章节知识】内容，生成一份以“理解为先”的专业教学设计文稿。\n\
+            \n**理论框架：帕金斯理解性学习五步法**\n\n1. **选择生成性主题**：围绕本单元教学的“大概念”或核心主题展开。主题应具备开放性、生成性和关联性——能够引发持续探究、生成多元理解，并与学生的生活世界建立联系。教师与学生可共同参与主题选择。\n\
+            \n2. **设定理解性目标**：在课程开始前，明确陈述本单元的理解性目标。目标聚焦于“学生将理解什么”，而非“学生将记住什么”。目标应具体、可表现，并具有适当的挑战性。\n\
+            \n3. **设计理解性表现**：这是框架的核心。理解性表现是指学生展示理解的具体方式——即“学生能做什么来证明自己真正理解了”。遵循逆向设计逻辑：先确定预期结果，再确定评估证据，最后设计学习体验。理解性表现应具备：\n\
+            \   - 在真实或模拟的情境中应用所学知识\n   - 灵活思考、解决开放性问题\n   - 对所学内容进行解释、论证或创造\n\n4.\
+            \ **实施持续性评价**：将评价贯穿整个教学过程的始终，而非仅作为终结性考核。教师作为理解性表现的指导者，而非知识的讲述者——角色是“培养学生用表现展示理解的能力的指导者”。\n\
+            \n5. **教学反思与调整**：根据持续性评价的反馈，反思教学目标是否达成、理解性表现设计是否恰当，并在后续教学中进行调整。\n\n**输入：教材章节知识**\n\
+            {{#1774936752242.knowledge#}}\n\n**输出要求：**\n请按照以下结构化格式输出完整的教学设计文稿。所有内容必须紧密结合输入的【教材章节知识】，避免空泛理论。使用清晰的标题、列表、表格等增强可读性。\n\
+            \n---\n\n## 《[根据章节知识自拟课题]》——基于帕金斯理解性学习框架的教学设计\n\n### 一、生成性主题的选择\n- **大概念/核心主题**：\n\
+            - **主题的开放性**：（为什么这个问题或主题没有唯一标准答案？能引发哪些持续探究？）\n- **主题的生成性**：（主题如何衍生出新的问题、视角或产品？）\n\
+            - **主题的关联性**：（主题如何与学生的生活世界、已有经验或社会现实建立联系？）\n- **师生共选说明**：（教师预设+学生可能参与调整的方式）\n\
+            \n### 二、理解性目标的设定\n（以下目标均以“学生将理解……”开头，聚焦深层观念和迁移能力，不少于2条，不多于5条）\n\n| 序号\
+            \ | 理解性目标（学生将理解……） | 对应的核心问题 |\n|------|----------------------------|----------------|\n\
+            | 1    |                            |                |\n| 2    |     \
+            \                       |                |\n| ...  |                 \
+            \           |                |\n\n### 三、理解性表现的设计（核心环节）\n#### 3.1 预期结果（逆向设计第一步）\n\
+            - 学生最终能够完成什么综合性的表现性任务？\n\n#### 3.2 评估证据（逆向设计第二步）\n- **主要理解性表现任务**：（一个核心的真实/模拟情境任务，要求学生应用、解释、论证或创造）\n\
+            \  - 任务情境：\n  - 任务要求（可包含子任务）：\n  - 开放性与灵活性说明：\n- **其他辅助证据**：（如解释性写作、辩论、作品集、反思日志等）\n\
+            \n#### 3.3 学习体验设计（逆向设计第三步）\n- 需要为学生提供哪些知识、技能和资源，以支持他们完成理解性表现？\n- 学习活动序列（简述主要活动及其如何服务于理解性表现）：\n\
+            \n### 四、持续性评价的实施\n- **评价贯穿全程的设计**：\n  - 教学前评价（前测/已有观念调查）：\n  - 教学中的形成性评价（观察、提问、草稿反馈、自评互评等）：\n\
+            \  - 教学后的总结性评价（以理解性表现任务为主，结合量规）：\n- **教师的指导者角色**：\n  - 如何提供反馈但不直接告知答案？\n\
+            \  - 如何帮助学生逐步提升表现质量？\n\n- **评价量规（示例）** ：（针对核心理解性表现任务，设计3-4个维度的等级描述，如“解释深度、应用灵活性、论证逻辑、创造性”等，每个维度分“优秀/达标/待改进”）\n\
+            \n### 五、教学反思与调整预案\n- **反思点**：\n  - 如何根据持续性评价收集的证据判断学生是否达成理解性目标？\n  - 若部分学生未能达成，可能的调整策略是什么？\n\
+            - **调整机制**：\n  - （例如：第二轮教学中更换情境、简化或升级任务、增加支架或减少提示等）\n\n### 六、整体教学流程概览（建议时间线）\n\
+            （以一个单元或连续课时为单位，列出阶段、主要活动、对应的理解性目标或表现任务）\n\n**注意事项：**\n- 所有设计必须紧密围绕【教材章节知识】的具体内容，不可泛泛而谈。\n\
+            - 理解性目标必须使用“学生将理解……”句式，而不是“知道”“记住”。\n- 核心理解性表现任务必须是开放性的、真实或模拟的情境问题，不能是封闭式练习。\n\
+            - 持续性评价必须体现“全过程”，教师角色是指导者而非灌输者。\n- 语言精炼、专业，直接输出结果，无需额外解释。"
+        selected: false
+        title: LLM 3
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1774937574263'
+      position:
+        x: 758.8209881080323
+        y: 614.4313335302878
+      positionAbsolute:
+        x: 758.8209881080323
+        y: 614.4313335302878
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 乔纳森：建构主义学习环境设计框架
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: e52ff561-eb6b-4a7e-81d6-2166558c3db9
+          role: system
+          text: '你是一位精通建构主义学习环境（CLEs）设计的课程专家。请严格遵循下面的 **CLEs 模型**，针对用户提供的【教材章节知识】内容，生成一份专业、具体、可操作的教学设计文稿。
+
+
+            **CLEs 模型核心理论（必须全部融入设计）：**
+
+
+            ### 一、六大基本要素（设计内容）
+
+            1. **设计问题**：呈现一个真实、复杂、有意义的核心问题（必须是本单元能解决的真实挑战或困惑）。
+
+            2. **相关实例**：提供多样化的案例、工作示例，帮助学生类比迁移。
+
+            3. **信息资源**：提供学生可自主选择、查阅的各类学习资料（文本、视频、数据等）。
+
+            4. **认知工具**：设计支持思维过程的工具（如概念图、决策矩阵、专家系统、KWL表格等）。
+
+            5. **会话与协作**：设计同伴交流、协作解决问题的活动和工具（如讨论区、角色扮演、小组互评等）。
+
+            6. **社会背景支持**：营造支持性的学习氛围（包括物质环境布置、心理安全感、激励机制等）。
+
+
+            ### 二、六大设计环节（操作步骤）
+
+            1. **确定学习主题**：明确本单元学习的核心主题和要解决的根本问题。
+
+            2. **创设教学情境**：围绕核心问题设计真实、有意义的学习情境（故事、任务、角色等）。
+
+            3. **信息资源设计**：列出学生可自主选择的信息资源清单及获取方式。
+
+            4. **自主学习设计**：设计学生自主探究、建构意义的活动（个体任务、反思日记等）。
+
+            5. **协作学习环境设计**：设计同伴交流、协作解决问题的具体环境和工具（分组策略、协作流程、在线/线下平台）。
+
+            6. **学习效果评价设计**：设计基于表现的评价方案（量规、作品评价、过程性评价等）。
+
+
+            ### 三、三种教学策略（教师角色定位）
+
+            教师需扮演以下三种角色并采用相应策略：
+
+            - **建模策略（Modeling）**：教师示范专家型的问题解决思维过程和操作过程（如“出声思考”演示）。
+
+            - **教练策略（Coaching）**：在学生解决问题过程中提供观察、提示、反馈和指导（如过程性点拨、追问）。
+
+            - **支架策略（Scaffolding）**：在学习困难时提供临时支持（如步骤提示卡、模板），并在学生能力提升后逐渐撤除。
+
+
+            **输入：教材章节知识**
+
+            {{#1774936752242.knowledge#}}
+
+            **输出要求：**
+
+            请按照以下结构化格式输出完整的教学设计文稿。所有设计必须围绕输入的【教材章节知识】具体展开，不得空泛。使用清晰的标题、表格、列表等增强可读性。
+
+
+            ---
+
+
+            ## 《[根据章节知识自拟课题]》——基于CLEs模型的教学设计
+
+
+            ### 一、概览
+
+            - **核心主题**：
+
+            - **核心驱动问题**（真实、复杂、有意义）：
+
+
+            ### 二、六大基本要素（设计内容）
+
+            1. **设计问题**：（详细描述核心问题及其真实性和复杂性来源）
+
+            2. **相关实例**：（提供至少2个与本章节知识相关的案例或工作示例，说明如何帮助学生迁移）
+
+            3. **信息资源**：（列出学生可自主查阅的资源，包括教材页码、拓展阅读、视频链接、数据集等）
+
+            4. **认知工具**：（设计1-2个具体工具，如概念图框架、决策矩阵模板、KWL表格等，并附简要使用说明）
+
+            5. **会话与协作**：（设计至少1个协作活动，说明分组方式、协作任务、交流工具）
+
+            6. **社会背景支持**：（描述如何营造支持性氛围，包括物理环境、心理安全感、评价文化等）
+
+
+            ### 三、六大设计环节（操作步骤）
+
+            #### 步骤1：确定学习主题
+
+            - 核心主题：
+
+            - 要解决的根本问题：
+
+
+            #### 步骤2：创设教学情境
+
+            - 情境描述：（一个完整的导入故事、角色任务或真实问题场景，使学生产生代入感）
+
+
+            #### 步骤3：信息资源设计
+
+            - 资源清单（分类列出，如“必读资料”“选读资料”“多媒体资源”“数据工具”等）
+
+
+            #### 步骤4：自主学习设计
+
+            - 个体任务：（如信息收集、概念整理、问题假设、反思日记等）
+
+            - 学习支架：（提供什么临时支持，后续如何撤除）
+
+
+            #### 步骤5：协作学习环境设计
+
+            - 协作任务：（小组共同产出的成果形式）
+
+            - 分组策略：（如异质分组、角色分配）
+
+            - 协作工具：（如白板、在线文档、讨论区）
+
+            - 协作流程：（时间线、关键节点）
+
+
+            #### 步骤6：学习效果评价设计
+
+            - 评价目标：（对应核心问题解决能力）
+
+            - 评价任务：（表现性任务，如报告、方案、演示等）
+
+            - 评价量规：（以表格形式呈现3-4个等级，涵盖内容、协作、创新等维度）
+
+            - 过程性评价方式：（观察记录、同伴互评、学习日志等）
+
+
+            ### 四、三种教学策略的具体应用
+
+            | 教学策略 | 教师行为示例（针对本单元） | 实施时机 |
+
+            |---------|--------------------------|----------|
+
+            | 建模策略 | （如：教师示范如何分析案例中的关键信息，边操作边说出思考过程） | |
+
+            | 教练策略 | （如：在学生小组讨论时巡回观察，提出“你为什么这么认为？”“还有没有其他可能？”等提示性问题） | |
+
+            | 支架策略 | （如：提供“问题分析模板”，后期逐步隐去模板，让学生独立完成） | |
+
+
+            ### 五、教学流程概览（建议时间线）
+
+            （用表格或时间轴形式呈现一节课或一个单元的主要阶段、教师活动、学生活动、对应要素/环节）
+
+
+            **注意事项：**
+
+            - 所有内容必须紧扣【教材章节知识】，不能泛泛而谈通用理论。
+
+            - 核心问题必须是真实的、复杂的、有意义的，不能是简单的“什么是X”。
+
+            - 评价设计必须与核心问题解决能力直接相关，避免脱离情境的纸笔测试。
+
+            - 支架策略必须体现“渐撤”过程。
+
+            - 语言精炼、专业，直接输出结果，无需额外解释。'
+        selected: false
+        title: LLM 4
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1774937576503'
+      position:
+        x: 758.8209881080323
+        y: 478.75169516562005
+      positionAbsolute:
+        x: 758.8209881080323
+        y: 478.75169516562005
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 布鲁姆：教学目标定位框架
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - edition_type: basic
+          id: 02e2fea2-f064-4da0-a16b-8053c0a8f1a5
+          role: system
+          text: '你是一位精通教学设计理论与教材分析的课程专家。请严格遵循下面描述的 **“三维一致性设计流程”** ，针对用户提供的【教材章节知识】内容，生成一份专业、具体、可落地的教学设计文稿。
+
+
+            **理论框架：三维一致性设计流程（共六步）**
+
+            1.  **开发知识维度模型**：界定本章节所涉及的知识属于事实性知识（知道什么）、概念性知识（理解什么）、程序性知识（会做什么）还是元认知知识（如何学习）。
+
+            2.  **确定认知水平层级**：依据记忆、理解、应用、分析、评估、创造六个层次，明确学生需要达到的认知目标层级，并给出典型参照案例。
+
+            3.  **构建二维分类表**：以知识维度（4行）为行，认知过程维度（6列）为列，在交叉单元格中填写具体的、可测量的教学目标。
+
+            4.  **基于分类表设计教学活动**：确保教学活动与分类表中的目标层级一致（如“记忆”配复述/识别，“创造”配项目/设计等）。
+
+            5.  **基于分类表设计评价任务**：确保评价任务与目标层级一致（如“应用”不能用选择题，而要设计真实情境操作或案例分析）。
+
+            6.  **检验一致性**：明确指出教学目标、教学活动、教学评估三者是否落在同一个“知识×认知”单元格中。
+
+
+            **输入：教材章节知识**
+
+            {{#1774936752242.knowledge#}}
+
+
+            **输出要求：**
+
+            请按照以下结构化格式输出完整的教学设计文稿，每一步都必须结合上述输入的具体知识内容进行分析，避免空泛套话。使用清晰的标题和适当表格。
+
+
+            ## 一、知识维度模型分析
+
+            （分别列出本章节包含的：事实性知识、概念性知识、程序性知识、元认知知识。如某一类缺失请注明“无”。）
+
+
+            ## 二、认知水平层级确定
+
+            （根据学生学情和课程标准，确定本章节的核心认知目标层级（可多个，但需说明主次），并至少给出2个与本章节内容直接相关的不同层级的参照案例。）
+
+
+            ## 三、二维分类表（教学目标矩阵）
+
+            （构建一个4行×6列的表格，行标题为“事实性/概念性/程序性/元认知”，列标题为“记忆/理解/应用/分析/评估/创造”。在相关单元格中填写具体的教学目标语句。不需要填满，只填写本章节实际需要的目标。）
+
+
+            ## 四、基于分类表设计的教学活动
+
+            （列出3-5个主要教学活动，每个活动需注明它对应二维分类表中的哪个“知识×认知”单元格，并简要说明活动形式与步骤。）
+
+
+            ## 五、基于分类表设计的评价任务
+
+            （列出2-3个评价任务，每个任务需注明它对应哪个“知识×认知”单元格，并详细描述任务情境、任务要求及评分标准要点。）
+
+
+            ## 六、一致性检验声明
+
+            （制作一个小型对照表，分别列出**关键教学目标**、**对应的教学活动**、**对应的评价任务**，并确认三者是否位于相同的“知识×认知”单元格中。若有偏差，请说明调整建议。）
+
+
+            **注意事项：**
+
+            - 所有设计必须围绕{{#1774936752242.knowledge#}}的具体内容展开，不得脱离教材。
+
+            - 教学目标使用“学生能够……”的行为动词表述。
+
+            - 评价任务尽量设计表现性评价或真实性评价，避免单一纸笔测试。
+
+            - 保持语言精炼、专业，直接输出结果，无需额外解释。'
+        selected: false
+        title: LLM 5
+        type: llm
+        vision:
+          enabled: false
+      height: 116
+      id: '1774937578504'
+      position:
+        x: 758.8209881080323
+        y: 346.84207940316077
+      positionAbsolute:
+        x: 758.8209881080323
+        y: 346.84207940316077
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - YkLUxZ036z6a35mTYP5IVQBfAMCDeQbdyM/Au/ja/u0HKrxdI6NAZJkVYXMS0N2Y
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: nomic-embed-text
+              embedding_provider_name: langgenius/ollama/ollama
+              vector_weight: 1
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector: []
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 90
+      id: '1774939862881'
+      position:
+        x: 769.9753955386448
+        y: 97.13331613548394
+      positionAbsolute:
+        x: 769.9753955386448
+        y: 97.13331613548394
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:1.5b
+          provider: langgenius/ollama/ollama
+        prompt_template:
+        - id: 69101c64-7123-4436-bc9d-349bbb559a1e
+          role: system
+          text: 排序
+        selected: false
+        title: LLM 6
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1774939921659'
+      position:
+        x: 432.6362028290107
+        y: 336.25458185914704
+      positionAbsolute:
+        x: 432.6362028290107
+        y: 336.25458185914704
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 03a39b7d-f2d7-42db-b4d9-eb0613062787
+          role: system
+          text: 总结，将其中使用的化学素材分类，标签化
+        selected: false
+        title: LLM 7
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1774940016019'
+      position:
+        x: 1088.775795989262
+        y: 169.9897061712925
+      positionAbsolute:
+        x: 1088.775795989262
+        y: 169.9897061712925
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:1.5b
+          provider: langgenius/ollama/ollama
+        prompt_template:
+        - id: e74f7716-7f15-4ce1-abf9-f2eace9cf06a
+          role: system
+          text: 根据教案，设计其中合适的内容作为可视化，可交互的html的提示词
+        selected: false
+        title: LLM 8
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1774940055130'
+      position:
+        x: 1418.7306038704917
+        y: 478.75169516562005
+      positionAbsolute:
+        x: 1418.7306038704917
+        y: 478.75169516562005
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        classes:
+        - id: '1'
+          name: 高中化学
+        - id: '2'
+          name: 初中化学
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:1.5b
+          provider: langgenius/ollama/ollama
+        query_variable_selector:
+        - '1774936752242'
+        - knowledge
+        selected: false
+        title: 问题分类器
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 170
+      id: '1774941314324'
+      position:
+        x: 432.6362028290107
+        y: 102.78835003879634
+      positionAbsolute:
+        x: 432.6362028290107
+        y: 102.78835003879634
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - 8Y9jtzU9u6H3eAH/F5C2JxplaYfdF9KZ5IobJEIOfEcAkMKDb91fKFnIyHf7JJFq
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: nomic-embed-text
+              embedding_provider_name: langgenius/ollama/ollama
+              vector_weight: 1
+            weight_type: customized
+        query_attachment_selector: []
+        query_variable_selector: []
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索 2
+        type: knowledge-retrieval
+      height: 90
+      id: '1774941360143'
+      position:
+        x: 769.9753955386448
+        y: 232.00803360788063
+      positionAbsolute:
+        x: 769.9753955386448
+        y: 232.00803360788063
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        delivery_methods:
+        - enabled: true
+          id: ff7c255d-ac58-4206-b74b-7221098c5ec7
+          type: webapp
+        form_content: ''
+        inputs: []
+        selected: false
+        timeout: 3
+        timeout_unit: day
+        title: 人工介入
+        type: human-input
+        user_actions:
+        - button_style: default
+          id: HTML
+          title: Button Text 1
+      height: 164
+      id: '1775201201942'
+      position:
+        x: 1107.6259090003034
+        y: 586.8111979170383
+      positionAbsolute:
+        x: 1107.6259090003034
+        y: 586.8111979170383
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: 教案输出
+        outputs:
+        - value_selector:
+          - '1774937578504'
+          - text
+          value_type: string
+          variable: text1
+        - value_selector:
+          - '1774937576503'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - '1774937574263'
+          - text
+          value_type: string
+          variable: text_1
+        - value_selector:
+          - '1774936912940'
+          - text
+          value_type: string
+          variable: text_2
+        - value_selector:
+          - '1774936802991'
+          - text
+          value_type: string
+          variable: text_3
+        selected: false
+        title: 输出
+        type: end
+      height: 220
+      id: '1775202013203'
+      position:
+        x: 1424.3856377738039
+        y: 621.7803164309158
+      positionAbsolute:
+        x: 1424.3856377738039
+        y: 621.7803164309158
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: 总结，标签化
+        outputs:
+        - value_selector:
+          - '1774940016019'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 输出 2
+        type: end
+      height: 116
+      id: '1775202019174'
+      position:
+        x: 1402.5006264726999
+        y: 159.75972877350077
+      positionAbsolute:
+        x: 1402.5006264726999
+        y: 159.75972877350077
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: HTML输出
+        outputs:
+        - value_selector:
+          - '1774940055130'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 输出 3
+        type: end
+      height: 116
+      id: '1775202065312'
+      position:
+        x: 1424.3856377738039
+        y: 319.13959316025114
+      positionAbsolute:
+        x: 1424.3856377738039
+        y: 319.13959316025114
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 103.0065701207634
+      y: 184.82086493663564
+      zoom: 0.3789291416275996
+  rag_pipeline_variables: []
